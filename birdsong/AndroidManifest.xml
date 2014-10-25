@@ -24,11 +24,16 @@
         </activity>
         <!-- This class will react on the SMS show a notification
                        and start the Main-App afterwards -->
-        <receiver android:name="com.example.birdsong.SMSReceiver">
+        <!--<receiver android:name="com.example.birdsong.SMSReceiver">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
-        </receiver>    
+        </receiver>-->
+        <receiver android:name=".listener.SmsListener">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>  
         <!--<activity
             android:name="com.example.birdsong.MainActivity"
             android:label="@string/app_name" >
