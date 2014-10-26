@@ -35,9 +35,12 @@ public class SMSReceiver extends BroadcastReceiver {
             smsMessage[n] = SmsMessage.createFromPdu((byte[]) messages[n]);
         }
         
-		MediaPlayer mediaplayer = MediaPlayer.create(context, R.raw.birds2);
-		mediaplayer.start();
         
         
+		MediaPlayer birds2 = MediaPlayer.create(context, R.raw.birds2);
+		birds2.start();
+        
+		Toast toast = Toast.makeText(context, "Received SMS: " + smsMessage[0].getMessageBody(), Toast.LENGTH_LONG);
+        toast.show();
     }
 }
