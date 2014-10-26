@@ -37,21 +37,21 @@ public class SMSReceiver extends BroadcastReceiver {
     	//Map<String, List<String>> modMap = new HashMap<String, List<String>>();
     	HashMap<Integer, String> modMap = new HashMap<Integer, String>();
     	// put values into map
-    	modMap.put(0, "birds1");
-    	modMap.put(1, "");
-    	modMap.put(2, "");
-    	modMap.put(3, "");
-    	modMap.put(4, "");
-    	modMap.put(5, "");
-    	modMap.put(6, "");
-    	modMap.put(7, "");
-    	modMap.put(8, "");
-    	modMap.put(9, "");
-    	modMap.put(10, "");
-    	modMap.put(11, "");
-    	modMap.put(12, "");
-    	modMap.put(13, "");
-    	modMap.put(14, "");
+    	modMap.put(0, "chattyrobin");
+    	modMap.put(1, "chirp");
+    	modMap.put(2, "cuckoo");
+    	modMap.put(3, "doublesqwark");
+    	modMap.put(4, "forestfloorbird");
+    	modMap.put(5, "twitter");
+    	modMap.put(6, "happytweeting");
+    	modMap.put(7, "kerukeru");
+    	modMap.put(8, "magpiesqwark");
+    	modMap.put(9, "mockingbirdhappychatty");
+    	modMap.put(10, "owlhootlong");
+    	modMap.put(11, "owlhootshort");
+    	modMap.put(12, "pigeoncoogrumpy");
+    	modMap.put(13, "pissedoffcrow");
+    	modMap.put(14, "pissedoffseagulls");
 
     	// create map to store
 
@@ -59,20 +59,20 @@ public class SMSReceiver extends BroadcastReceiver {
 
     	// put values into map
     	customMap.put(33, "birds1"); // !
-    	customMap.put(46, ""); // .
-    	customMap.put(63, ""); // ?
-    	customMap.put(32, ""); // " "
-    	customMap.put(126, ""); // ~
-    	customMap.put(48, ""); // 0
-    	customMap.put(49, ""); // 1
-    	customMap.put(50, ""); // ...
-    	customMap.put(51, ""); // ...
-    	customMap.put(52, ""); // ...
-    	customMap.put(53, ""); // ...
-    	customMap.put(54, ""); // ...
-    	customMap.put(55, ""); // ...
-    	customMap.put(56, ""); // ...
-    	customMap.put(57, ""); // 9
+    	customMap.put(46, "verychirpybirdy"); // .
+    	customMap.put(63, "twitter"); // ?
+    	customMap.put(32, "twitter"); // " "
+    	customMap.put(126, "screech"); // ~
+    	customMap.put(48, "gobble"); // 0
+    	customMap.put(49, "gobble"); // 1
+    	customMap.put(50, "gobble"); // ...
+    	customMap.put(51, "gobble"); // ...
+    	customMap.put(52, "gobble"); // ...
+    	customMap.put(53, "gobble"); // ...
+    	customMap.put(54, "gobble"); // ...
+    	customMap.put(55, "gobble"); // ...
+    	customMap.put(56, "gobble"); // ...
+    	customMap.put(57, "gobble"); // 9
     	
         
         // retrieves sms object and puts into string
@@ -87,16 +87,17 @@ public class SMSReceiver extends BroadcastReceiver {
         char[] messageCharacters = messageString.toCharArray();
         int[] messageIntegers= new int[messageCharacters.length];
         for (int n = 0; n < messageCharacters.length; n++) {
-        	messageIntegers[n] = messageCharacters[n]%5;	
+        	messageIntegers[n] = messageCharacters[n]%15;	
         }
 
         // handling audio files
         int resourceid = 0;
+        MediaPlayer mediaplayer = null;
         try {
         	for (int n = 0; n < messageIntegers.length; n++)
         	{
-        		resourceid = R.raw.class.getField((String)modMap.get(n)).getInt(null);
-				MediaPlayer mediaplayer = MediaPlayer.create(context, resourceid);
+        		resourceid = R.raw.class.getField((String)modMap.get(messageIntegers[n])).getInt(null);
+				mediaplayer = MediaPlayer.create(context, resourceid);
 				mediaplayer.start();
         	}
 		} catch (IllegalAccessException e) {
@@ -109,8 +110,9 @@ public class SMSReceiver extends BroadcastReceiver {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        mediaplayer.release();
         
-		Toast toast = Toast.makeText(context, "Array" + messageIntegers[0] + smsMessage[0].getMessageBody(), Toast.LENGTH_LONG);
+		Toast toast = Toast.makeText(context, "Array" + smsMessage[0].getMessageBody(), Toast.LENGTH_LONG);
         toast.show();
     }
 }

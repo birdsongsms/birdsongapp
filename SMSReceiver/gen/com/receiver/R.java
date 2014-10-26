@@ -19,12 +19,24 @@ public final class R {
         public static final int main=0x7f030000;
     }
     public static final class raw {
-        public static final int birds0=0x7f040000;
-        public static final int birds011=0x7f040001;
-        public static final int birds1=0x7f040002;
-        public static final int birds2=0x7f040003;
-        public static final int birds3=0x7f040004;
-        public static final int birds4=0x7f040005;
+        public static final int chattyrobin=0x7f040000;
+        public static final int chirp=0x7f040001;
+        public static final int cuckoo=0x7f040002;
+        public static final int doublesqwark=0x7f040003;
+        public static final int forestfloorbird=0x7f040004;
+        public static final int gobble=0x7f040005;
+        public static final int happytweeting=0x7f040006;
+        public static final int kerukeru=0x7f040007;
+        public static final int magpiesqwark=0x7f040008;
+        public static final int mockingbirdhappychatty=0x7f040009;
+        public static final int owlhootlong=0x7f04000a;
+        public static final int owlhootshort=0x7f04000b;
+        public static final int pigeoncoogrumpy=0x7f04000c;
+        public static final int pissedoffcrow=0x7f04000d;
+        public static final int pissedoffseagulls=0x7f04000e;
+        public static final int screech=0x7f04000f;
+        public static final int twitter=0x7f040010;
+        public static final int verychirpybirdy=0x7f040011;
     }
     public static final class string {
         public static final int app_name=0x7f050001;
