@@ -33,14 +33,39 @@ public class SMSReceiver extends BroadcastReceiver {
         SmsMessage smsMessage[] = new SmsMessage[messages.length];
         for (int n = 0; n < messages.length; n++) {
             smsMessage[n] = SmsMessage.createFromPdu((byte[]) messages[n]);
+            //smsIntegers[n] = Character.getNumericValue(smsMessage[n]);
         }
+        String messageString = smsMessage[0].getMessageBody();
+        char[] messageCharacters = messageString.toCharArray();
+        int[] messageIntegers= new int[messageCharacters.length];
+        for (int n = 0; n < messageCharacters.length; n++) {
+        	messageIntegers[n] = messageCharacters[n]%5;	
+        }
+        for (int n = 0; n < messageCharacters.length; n++) {
+        	//if me
+        	String intString = messageIntegers.toString();
+        }
+        int resourceid = 0;
+		try {
+			resourceid = R.raw.class.getField("birds" + messageIntegers[0]).getInt(null);
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchFieldException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		MediaPlayer mediaplayer = MediaPlayer.create(context, resourceid);
+		mediaplayer.start();
+		mediaplayer = MediaPlayer.create(context, R.raw.birds1);
+		//mediaplayer.start();
+		mediaplayer = MediaPlayer.create(context, R.raw.birds2);
+		//mediaplayer.start();
         
-        
-        
-		MediaPlayer birds2 = MediaPlayer.create(context, R.raw.birds2);
-		birds2.start();
-        
-		Toast toast = Toast.makeText(context, "Received SMS: " + smsMessage[0].getMessageBody(), Toast.LENGTH_LONG);
+		Toast toast = Toast.makeText(context, "Array" + messageIntegers[0] + smsMessage[0].getMessageBody(), Toast.LENGTH_LONG);
         toast.show();
     }
 }
