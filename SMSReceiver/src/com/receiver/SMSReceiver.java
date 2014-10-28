@@ -1,7 +1,3 @@
-/*
- Copyright 2008 Wissen Systems. All rights reserved.
- Author: Prashant Kalkar on 7:45:37 PM
- */
 package com.receiver;
 
 import java.util.HashMap;
@@ -11,9 +7,11 @@ import java.util.Map;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.gsm.SmsMessage;
 import android.widget.Toast;
 
@@ -83,6 +81,7 @@ public class SMSReceiver extends BroadcastReceiver {
             smsMessage[n] = SmsMessage.createFromPdu((byte[]) messages[n]);
         }
         String messageString = smsMessage[0].getMessageBody();
+        
         // converting sms body string into utf-8 character array
         char[] messageCharacters = messageString.toCharArray();
         int[] messageIntegers= new int[messageCharacters.length];
@@ -92,14 +91,34 @@ public class SMSReceiver extends BroadcastReceiver {
 
         // handling audio files
         int resourceid = 0;
-        MediaPlayer mediaplayer = null;
+        MediaPlayer[] mediaplayer = null;
         try {
+        	//iterate through message characters
         	for (int n = 0; n < messageIntegers.length; n++)
         	{
-        		resourceid = R.raw.class.getField((String)modMap.get(messageIntegers[n])).getInt(null);
-				mediaplayer = MediaPlayer.create(context, resourceid);
-				mediaplayer.start();
+        		
+        		
+        		//get the sound from a dictionary----------------
+        		String customSoundName = (String)customMap.get(messageIntegers[n]);
+        		// try custom dict
+        		if (customSoundName != null)
+        		{
+        			resourceid = R.raw.class.getField(customSoundName).getInt(null);
+        			
+        		}
+        		//else use modulus dict
+        		else
+        		{
+        			String modulusSoundName = (String)customMap.get(messageIntegers[n]);
+        			resourceid = R.raw.class.getField(modulusSoundName).getInt(null);
+        		}
+        		//call handler to play sound file------------------
+        		SoundRunnable playNSound = new SoundRunnable(resourceid, n, context);
+        		Handler soundHandler = new Handler();
+        		soundHandler.postDelayed(playNSound, n*1000);
+        		        		
         	}
+        	
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -110,9 +129,14 @@ public class SMSReceiver extends BroadcastReceiver {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        mediaplayer.release();
         
-		Toast toast = Toast.makeText(context, "Array" + smsMessage[0].getMessageBody(), Toast.LENGTH_LONG);
-        toast.show();
+        
+        /*//SilentToNomal and NormalToSilent device Programatically
+        final AudioManager mode = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+       //Silent Mode Programatically
+       mode.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+
+       /Normal Mode Programatically
+         mode.setRingerMode(AudioManager.RINGER_MODE_NORMAL);*/
     }
 }
